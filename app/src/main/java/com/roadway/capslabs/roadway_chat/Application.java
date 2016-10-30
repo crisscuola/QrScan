@@ -13,6 +13,4 @@ public class Application extends android.app.Application {
             VKSdk.initialize(this);
 
         }
-
-
 }

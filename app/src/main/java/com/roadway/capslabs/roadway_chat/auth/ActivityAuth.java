@@ -34,8 +34,6 @@ public class ActivityAuth extends AppCompatActivity  {
             startActivity(activitySignUp);
         }
 
-        //FacebookSdk.sdkInitialize(getApplicationContext());
-
         Button buttonSignUp = (Button) findViewById(R.id.submit_register_button);
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
@@ -56,15 +54,7 @@ public class ActivityAuth extends AppCompatActivity  {
             }
         });
 
-        Button buttonVk = (Button) findViewById(R.id.btn_vk);
 
-        buttonVk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ActivityVk.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private boolean isLoggedIn() {

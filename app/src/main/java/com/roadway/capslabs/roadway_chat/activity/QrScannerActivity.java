@@ -55,7 +55,6 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     @Override
     public void handleResult(Result rawResult) {
 
-
         Log.e("handler", rawResult.getText());
         Log.e("handler", rawResult.getBarcodeFormat().toString());
 
@@ -66,15 +65,11 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         toast.show();
 
         mScannerView.resumeCameraPreview(this);
-
     }
 
     @Override
-    public void onBackPressed()
-    {
-        Log.d("back","yes");
+    public void onBackPressed() {
         super.onBackPressed();
-//        this.finish();
 
         Intent intent = new Intent(QrScannerActivity.this, QrScannerActivity.class);
         startActivity(intent);
