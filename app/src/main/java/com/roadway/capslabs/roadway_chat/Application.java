@@ -11,8 +11,7 @@ public class Application extends android.app.Application {
                super.onCreate();
 
             VKSdk.initialize(this);
-//            FacebookSdk.sdkInitialize(this);
-//            AppEventsLogger.activateApp(this);
+
         }
 
 

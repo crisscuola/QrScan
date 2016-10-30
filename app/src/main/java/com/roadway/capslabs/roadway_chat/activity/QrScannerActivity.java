@@ -72,9 +72,8 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     @Override
     public void onBackPressed()
     {
-        // code here to show dialog
         Log.d("back","yes");
-        super.onBackPressed();  // optional depending on your needs
+        super.onBackPressed();
 //        this.finish();
 
         Intent intent = new Intent(QrScannerActivity.this, QrScannerActivity.class);
