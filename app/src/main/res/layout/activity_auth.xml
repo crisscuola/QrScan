@@ -45,6 +45,7 @@
         <Button
             android:id="@+id/submit_register_button"
             android:layout_marginTop="4dp"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#4ccf86"
