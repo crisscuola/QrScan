@@ -42,8 +42,7 @@ public class DrawerFactory {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
 
-                        if (position == 4) {
-                            //VKSdk.logout();
+                        if (position == 1) {
                             new Logouter().execute(activity);
                         }
 

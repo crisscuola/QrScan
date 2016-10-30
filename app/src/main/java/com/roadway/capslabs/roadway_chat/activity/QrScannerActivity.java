@@ -1,5 +1,6 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,7 +28,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scanner);
         initToolbar(getString(R.string.qr_activity_title));
-       // drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawerFactory.getDrawerBuilder(this, toolbar).build();
     }
 
     public void QrScanner(View view) {
@@ -66,5 +67,18 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
         mScannerView.resumeCameraPreview(this);
 
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        Log.d("back","yes");
+        super.onBackPressed();  // optional depending on your needs
+//        this.finish();
+
+        Intent intent = new Intent(QrScannerActivity.this, QrScannerActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

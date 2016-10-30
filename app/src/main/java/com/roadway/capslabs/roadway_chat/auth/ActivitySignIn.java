@@ -108,6 +108,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             Intent activitySignUp = new Intent(context, QrScannerActivity.class);
             startActivity(activitySignUp);
             Log.d("response_login", result);
+
         }
     }
 }
