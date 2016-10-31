@@ -66,16 +66,9 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         mScannerView.resumeCameraPreview(this);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//
-//        Intent intent = new Intent(QrScannerActivity.this, QrScannerActivity.class);
-//        startActivity(intent);
-//        this.finish();
-//    }
-
-    public void onDestroy() {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         moveTaskToBack(true);
 
         super.onDestroy();
@@ -83,4 +76,5 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         System.runFinalizersOnExit(true);
         System.exit(0);
     }
+
 }
