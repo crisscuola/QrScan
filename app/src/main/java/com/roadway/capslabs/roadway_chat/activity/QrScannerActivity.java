@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 import com.google.zxing.Result;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -21,6 +24,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     private ZXingScannerView mScannerView;
     private Toolbar toolbar;
     private final static DrawerFactory drawerFactory = new DrawerFactory();
+    private Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,10 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
         Log.e("handler", rawResult.getText());
         Log.e("handler", rawResult.getBarcodeFormat().toString());
+        String link = rawResult.getText();
+        String[] path = link.split("/");
+        Log.d("check_url", path[4]);
+        new CheckLink().execute(path[4]);
 
         Toast toast = Toast.makeText(getApplicationContext(),
                 rawResult.getText(),
@@ -63,7 +71,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
-        mScannerView.resumeCameraPreview(this);
+        //mScannerView.resumeCameraPreview(this);
     }
 
     @Override
@@ -75,6 +83,15 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
         System.runFinalizersOnExit(true);
         System.exit(0);
+    }
+
+    private final class CheckLink extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String link = String.valueOf(params[0]);
+            return new EventRequestHandler().getCheck(context, link);
+        }
+
     }
 
 }

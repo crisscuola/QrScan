@@ -169,6 +169,19 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
+
+    CHECK {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_REGISTER)
+                    .addPathSegment(PATH_PARTICIPANT)
+                    .addPathSegment("");
+        }
+    },
     PROFILE {
         @Override
         public HttpUrl.Builder getUrl() {
