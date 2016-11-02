@@ -1,12 +1,16 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.roadway.capslabs.roadway_chat.R;
@@ -23,6 +27,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     private Toolbar toolbar;
     private final static DrawerFactory drawerFactory = new DrawerFactory();
     private Activity context = this;
+    private AlertDialog.Builder ad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     @Override
     public void onPause() {
         super.onPause();
-//        mScannerView.stopCamera();
+        mScannerView.stopCamera();
     }
 
     private void initToolbar(String title) {
@@ -63,7 +68,36 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         Log.d("check_url", path[4]);
         new CheckLink().execute(path[4]);
 
-        //mScannerView.resumeCameraPreview(this);
+        String title = "Внимание! Код считан";
+        String message = "Вы хотите считать ещё код?";
+        String button1String = "Да";
+        String button2String = "Нет";
+
+        ad = new AlertDialog.Builder(context);
+        ad.setTitle(title);
+        ad.setMessage(message);
+        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mScannerView.resumeCameraPreview(QrScannerActivity.this);
+            }
+        });
+        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Intent intent = new Intent(context, QrScannerActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(context, "Вы ничего не выбрали",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ad.show();
     }
 
     @Override
