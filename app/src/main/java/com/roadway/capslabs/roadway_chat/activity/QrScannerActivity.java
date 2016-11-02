@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.roadway.capslabs.roadway_chat.R;
@@ -64,12 +62,6 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         String[] path = link.split("/");
         Log.d("check_url", path[4]);
         new CheckLink().execute(path[4]);
-
-        Toast toast = Toast.makeText(getApplicationContext(),
-                rawResult.getText(),
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
 
         //mScannerView.resumeCameraPreview(this);
     }
