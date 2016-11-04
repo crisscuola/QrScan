@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#83d0c9"
+    >
 
     <include
         android:id="@+id/toolbar_qr_scan"
@@ -13,6 +15,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:text="Scan"
+        android:background="#35a79c"
         android:onClick="QrScanner" />
 
 </LinearLayout>
