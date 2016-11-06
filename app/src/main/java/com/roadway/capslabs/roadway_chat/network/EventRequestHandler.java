@@ -48,6 +48,7 @@ public class EventRequestHandler {
             Response response = client.newCall(request).execute();
             String resp = response.body().string();
 
+
             Log.d("response_create_handler", resp);
             return resp;
         } catch (IOException e) {

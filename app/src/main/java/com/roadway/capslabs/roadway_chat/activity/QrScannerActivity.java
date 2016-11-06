@@ -1,7 +1,6 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -68,36 +67,10 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         Log.d("check_url", path[4]);
         new CheckLink().execute(path[4]);
 
-        String title = "Внимание! Код считан";
-        String message = "Вы хотите считать ещё код?";
-        String button1String = "Да";
-        String button2String = "Нет";
+        Intent intent = new Intent(context, QrScannerActivity.class);
+        startActivity(intent);
+        finish();
 
-        ad = new AlertDialog.Builder(context);
-        ad.setTitle(title);
-        ad.setMessage(message);
-        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mScannerView.resumeCameraPreview(QrScannerActivity.this);
-            }
-        });
-        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-                Intent intent = new Intent(context, QrScannerActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        ad.setCancelable(true);
-        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            public void onCancel(DialogInterface dialog) {
-                Toast.makeText(context, "Вы ничего не выбрали",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        ad.show();
     }
 
     @Override
@@ -118,6 +91,27 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
             return new EventRequestHandler().getCheck(context, link);
         }
 
+        @Override
+        protected void onPostExecute(String response) {
+            super.onPostExecute(response);
+
+            if (response.contains("[37]")) {
+                Toast.makeText(context, "Код уже зарегестрирован",
+                        Toast.LENGTH_LONG).show();
+            }
+
+            if (response.contains("[38]")) {
+                Toast.makeText(context, "Вы не создатель акции",
+                        Toast.LENGTH_LONG).show();
+            }
+
+            if (response.contains("object")) {
+                Toast.makeText(context, "Код зарегестрированы",
+                Toast.LENGTH_LONG).show();
+            }
+        }
     }
+
+
 
 }

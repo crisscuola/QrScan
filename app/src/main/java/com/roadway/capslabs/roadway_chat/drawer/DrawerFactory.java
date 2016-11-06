@@ -10,7 +10,6 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.roadway.capslabs.roadway_chat.R;
@@ -61,7 +60,7 @@ public class DrawerFactory {
             String email = (String) profile.get("email");
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(activity)
-                    .addProfiles(new ProfileDrawerItem())
+//                    .addProfiles(new ProfileDrawerItem())
                     .withTextColorRes(R.color.colorProfileName)
                     .withHeaderBackground(R.color.colorHeaderBackground)
                     .withSelectionListEnabledForSingleProfile(false)
