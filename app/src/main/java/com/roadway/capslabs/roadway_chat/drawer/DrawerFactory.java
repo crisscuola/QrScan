@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by kirill on 12.09.16
@@ -29,7 +30,7 @@ import java.util.List;
 public class DrawerFactory {
 
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
-        DrawerBuilder drawer = new DrawerBuilder()
+        final DrawerBuilder drawer = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
                 .withAccountHeader(getAccountHeader(activity))
@@ -42,9 +43,15 @@ public class DrawerFactory {
                         Intent intent = new Intent(activity, toActivity);
 
                         if (position == 1) {
-                            new Logouter().execute(activity);
+                            //VKSdk.logout();
+                            try {
+                                new Logouter().execute(activity).get();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            }
                         }
-
                         activity.startActivity(intent);
                         return true;
                     }
@@ -60,9 +67,9 @@ public class DrawerFactory {
             String email = (String) profile.get("email");
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(activity)
-//                    .addProfiles(new ProfileDrawerItem())
+                    // .addProfiles(new ProfileDrawerItem())
                     .withTextColorRes(R.color.colorProfileName)
-                    .withHeaderBackground(R.color.colorHeaderBackground)
+                    .withHeaderBackground(R.color.colorDarkBackground)
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
 
@@ -74,9 +81,7 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-//        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout");
-
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(1).withName("Logout");
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 

@@ -3,6 +3,7 @@ package com.roadway.capslabs.roadway_chat.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -30,9 +31,11 @@ public class ActivityAuth extends AppCompatActivity  {
         setContentView(R.layout.activity_auth);
 
         if (isLoggedIn()) {
-        Intent activitySignUp = new Intent(this, QrScannerActivity.class);
-            startActivity(activitySignUp);
+            Intent feedActivity = new Intent(this, QrScannerActivity.class);
+            startActivity(feedActivity);
         }
+
+        //FacebookSdk.sdkInitialize(getApplicationContext());
 
         Button buttonSignUp = (Button) findViewById(R.id.submit_register_button);
 
@@ -54,7 +57,18 @@ public class ActivityAuth extends AppCompatActivity  {
             }
         });
 
+        Button buttonVk = (Button) findViewById(R.id.btn_vk);
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        if (isLoggedIn()) {
+            Intent feedActivity = new Intent(this, QrScannerActivity.class);
+            startActivity(feedActivity);
+        }
     }
 
     private boolean isLoggedIn() {
@@ -63,8 +77,10 @@ public class ActivityAuth extends AppCompatActivity  {
         HttpUrl url = UrlType.FEED.getUrl().build();
         List<Cookie> cookies = cookieJar.loadForRequest(url);
         for (Cookie cookie : cookies) {
-            if("sessionid".equals(cookie.name()))
+            if("sessionid".equals(cookie.name())) {
+                Log.d("response_auth_session", cookie.value());
                 return true;
+            }
         }
 
         return false;

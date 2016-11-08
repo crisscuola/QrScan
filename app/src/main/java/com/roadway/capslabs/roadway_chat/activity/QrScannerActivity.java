@@ -46,11 +46,12 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mScannerView.stopCamera();
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        mScannerView.stopCamera();
+//    }
+    
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_qr_scan);
@@ -71,6 +72,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         startActivity(intent);
         finish();
 
+        mScannerView.stopCamera();
     }
 
     @Override

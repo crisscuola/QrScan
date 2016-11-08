@@ -70,8 +70,8 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         email = (EditText) findViewById(R.id.email);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
-        firstName = (EditText) findViewById(R.id.firstname);
-        lastName = (EditText) findViewById(R.id.lastname);
+//        firstName = (EditText) findViewById(R.id.firstname);
+//        lastName = (EditText) findViewById(R.id.lastname);
         register = (Button) findViewById(R.id.submit_register_button);
     }
 
