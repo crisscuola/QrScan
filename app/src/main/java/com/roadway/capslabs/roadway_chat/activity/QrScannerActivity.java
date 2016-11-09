@@ -51,7 +51,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 //        super.onPause();
 //        mScannerView.stopCamera();
 //    }
-    
+
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_qr_scan);
@@ -64,6 +64,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         Log.e("handler", rawResult.getText());
         Log.e("handler", rawResult.getBarcodeFormat().toString());
         String link = rawResult.getText();
+        Log.d("check_url", link);
         String[] path = link.split("/");
         Log.d("check_url", path[4]);
         new CheckLink().execute(path[4]);
