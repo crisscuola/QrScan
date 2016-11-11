@@ -1,8 +1,10 @@
 package com.roadway.capslabs.roadway_chat.drawer;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -43,16 +45,16 @@ public class DrawerFactory {
                         Intent intent = new Intent(activity, toActivity);
 
                         if (position == 1) {
-                            //VKSdk.logout();
-                            try {
-                                new Logouter().execute(activity).get();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        activity.startActivity(intent);
+                            getAlert(activity).show();
+//                            try {
+//                                new Logouter().execute(activity).get();
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            } catch (ExecutionException e) {
+//                                e.printStackTrace();
+//                            }
+                        } else
+                            activity.startActivity(intent);
                         return true;
                     }
                 });
@@ -69,7 +71,10 @@ public class DrawerFactory {
                     .withActivity(activity)
                     // .addProfiles(new ProfileDrawerItem())
                     .withTextColorRes(R.color.colorProfileName)
-                    .withHeaderBackground(R.color.colorDarkBackground)
+                    //.withHeaderBackground(R.color.colorDarkBackground)
+                    .withTextColorRes(R.color.colorProfileName)
+
+                    .withHeaderBackground(R.drawable.drawer3)
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
 
@@ -81,11 +86,49 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(1).withName("Logout");
+      //  SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(1).withName("Logout");
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout").withIcon(R.drawable.logout)
+                .withTextColorRes(R.color.red);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
         return items.toArray(array);
+    }
+
+    private AlertDialog.Builder getAlert(final Activity context) {
+        String title = "Warning!";
+        String message = "Are you sure you want to logout?";
+        String button1String = "Logout";
+        String button2String = "Cancel";
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        ad.setTitle(title);
+        ad.setMessage(message);
+        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    new Logouter().execute(context).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+
+        return ad;
     }
 
     private Class<? extends Activity> getActivity(int i) {
