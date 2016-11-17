@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">scaner</string>
+    <string name="app_name">DiscountScaner</string>
     <string name="action_settings">Settings</string>
     <integer name="com_vk_sdk_AppId">5620732</integer>
     <string name="facebook_app_id">1752993431632257</string>
@@ -39,7 +39,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_own">My Events</string>
     <string name="title_activity_sub">Subs Events</string>
-    <string name="app_title">Welcome</string>
+    <string name="app_title">Discount Basket</string>
+    <string name="help">Tap Scan button to activate discount</string>>
     <string name="field_email">Email:</string>
     <string name="field_password1">Password :</string>
     <string name="field_password2">Repeat password:</string>
@@ -48,4 +49,11 @@
     <string name="button_register">Register</string>
     <string name="description_confirm">Enter verification code here (check your email)</string>
     <string name="ok">OK</string>
+    <string name="email_hint">Enter login</string>
+    <string name="password_hint">Enter password</string>
+    <string name="sign_in_btn">Sign in</string>
+    <string name="sign_in_title">Sign in</string>
+    <string name="hint_password_repeat">Repeat password</string>
+    <string name="sign_up_title">Sign up</string>
+    <string name="organization_instruction">Show this code to organization</string>
 </resources>

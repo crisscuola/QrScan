@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#83d0c9"
+    >
 
     <include
         android:id="@+id/toolbar_qr_scan"
         layout="@layout/toolbar"/>
 
-    <Button android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Scan"
-        android:onClick="QrScanner" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/help"
+            android:id="@+id/clear_description"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:lines="4"
+            android:textSize="30sp"
+            android:textColor="#ddf9ff"
+            android:paddingRight="0dp"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="0dp" />
+
+        <Button android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Scan"
+            android:textSize="30sp"
+            android:textColor="#ddf9ff"
+            android:background="#35a79c"
+            android:onClick="QrScanner" />
+    </LinearLayout>
+
 
 </LinearLayout>
