@@ -115,20 +115,14 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
             super.onPostExecute(response);
 
             if (response.contains("[37]")) {
-//                Toast.makeText(context, "Код уже зарегестрирован",
-//                        Toast.LENGTH_LONG).show();
                 alertShow("Код уже зарегестрирован");
             }
 
             if (response.contains("[38]")) {
-//                Toast.makeText(context, "Вы не создатель акции",
-//                        Toast.LENGTH_LONG).show();
                 alertShow("Вы не создатель акции");
             }
 
             if (response.contains("object")) {
-//                Toast.makeText(context, "Код успешно зарегестрирован",
-//                Toast.LENGTH_LONG).show();
                 alertShow("Код успешно зарегестрирован");
             }
         }
