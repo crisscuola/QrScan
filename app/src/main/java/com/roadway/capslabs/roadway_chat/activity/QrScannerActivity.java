@@ -1,6 +1,7 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.roadway.capslabs.roadway_chat.R;
@@ -69,10 +69,6 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         Log.d("check_url", path[4]);
         new CheckLink().execute(path[4]);
 
-        Intent intent = new Intent(context, QrScannerActivity.class);
-        startActivity(intent);
-        finish();
-
         mScannerView.stopCamera();
     }
 
@@ -87,6 +83,26 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         System.exit(0);
     }
 
+    public void alertShow (String mes) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(QrScannerActivity.this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage(mes)
+                .setIcon(R.drawable.logo2)
+                .setCancelable(false)
+                .setNegativeButton("ОК",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Intent intent = new Intent(context, QrScannerActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
     private final class CheckLink extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -99,18 +115,21 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
             super.onPostExecute(response);
 
             if (response.contains("[37]")) {
-                Toast.makeText(context, "Код уже зарегестрирован",
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "Код уже зарегестрирован",
+//                        Toast.LENGTH_LONG).show();
+                alertShow("Код уже зарегестрирован");
             }
 
             if (response.contains("[38]")) {
-                Toast.makeText(context, "Вы не создатель акции",
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "Вы не создатель акции",
+//                        Toast.LENGTH_LONG).show();
+                alertShow("Вы не создатель акции");
             }
 
             if (response.contains("object")) {
-                Toast.makeText(context, "Код успешно зарегестрирован",
-                Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "Код успешно зарегестрирован",
+//                Toast.LENGTH_LONG).show();
+                alertShow("Код успешно зарегестрирован");
             }
         }
     }
