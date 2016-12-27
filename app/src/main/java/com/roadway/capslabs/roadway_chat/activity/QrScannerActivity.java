@@ -3,8 +3,10 @@ package com.roadway.capslabs.roadway_chat.activity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,10 +29,28 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     private final static DrawerFactory drawerFactory = new DrawerFactory();
     private Activity context = this;
     private AlertDialog.Builder ad;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("email")) {
+                email = getIntent().getExtras().getString("email");
+
+//                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPref.edit();
+//                editor.putString("email", email).commit();
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("email", email);
+                editor.commit();
+            }
+        }
+
         setContentView(R.layout.activity_qr_scanner);
         initToolbar(getString(R.string.qr_activity_title));
         drawerFactory.getDrawerBuilder(this, toolbar).build();
@@ -74,13 +94,13 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
-
-        super.onDestroy();
-
-        System.runFinalizersOnExit(true);
-        System.exit(0);
+//        super.onBackPressed();
+//        moveTaskToBack(true);
+//
+//        super.onDestroy();
+//
+//        System.runFinalizersOnExit(true);
+//        System.exit(0);
     }
 
     public void alertShow (String mes) {
@@ -110,25 +130,20 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
             return new EventRequestHandler().getCheck(context, link);
         }
 
+
         @Override
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
 
             if (response.contains("[37]")) {
-//                Toast.makeText(context, "Код уже зарегестрирован",
-//                        Toast.LENGTH_LONG).show();
                 alertShow("Код уже зарегестрирован");
             }
 
             if (response.contains("[38]")) {
-//                Toast.makeText(context, "Вы не создатель акции",
-//                        Toast.LENGTH_LONG).show();
                 alertShow("Вы не создатель акции");
             }
 
             if (response.contains("object")) {
-//                Toast.makeText(context, "Код успешно зарегестрирован",
-//                Toast.LENGTH_LONG).show();
                 alertShow("Код успешно зарегестрирован");
             }
         }

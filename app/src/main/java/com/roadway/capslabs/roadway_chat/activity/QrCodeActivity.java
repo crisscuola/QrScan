@@ -27,4 +27,9 @@ public class QrCodeActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_qr_code);
         toolbar.setTitle(title);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

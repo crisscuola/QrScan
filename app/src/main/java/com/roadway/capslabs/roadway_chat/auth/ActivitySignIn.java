@@ -57,6 +57,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         });
     }
 
+
     @Override
     public void onValidationSucceeded() {
         new LoginRequest().execute(email.getText().toString(), password.getText().toString());
@@ -81,8 +82,8 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         password = (EditText) findViewById(R.id.password);
         button = (Button) findViewById(R.id.btn_in);
 
-        email.setTextColor(Color.WHITE);
-        password.setTextColor(Color.WHITE);
+        email.setTextColor(Color.BLACK);
+        password.setTextColor(Color.BLACK);
     }
 
     private final class LoginRequest extends AsyncTask<Object, Void, String> {
@@ -110,6 +111,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             }
 
             Intent activitySignUp = new Intent(context, QrScannerActivity.class);
+            activitySignUp.putExtra("email", email.getText().toString());
             startActivity(activitySignUp);
             Log.d("response_login", result);
         }
