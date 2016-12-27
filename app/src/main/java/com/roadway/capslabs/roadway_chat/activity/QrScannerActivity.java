@@ -74,13 +74,13 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
-
-        super.onDestroy();
-
-        System.runFinalizersOnExit(true);
-        System.exit(0);
+//        super.onBackPressed();
+//        moveTaskToBack(true);
+//
+//        super.onDestroy();
+//
+//        System.runFinalizersOnExit(true);
+//        System.exit(0);
     }
 
     public void alertShow (String mes) {
@@ -108,6 +108,13 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         protected String doInBackground(String... params) {
             String link = String.valueOf(params[0]);
             return new EventRequestHandler().getCheck(context, link);
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+
+            alertShow("Wrong !!!");
         }
 
         @Override

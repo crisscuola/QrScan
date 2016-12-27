@@ -3,7 +3,9 @@ package com.roadway.capslabs.roadway_chat.drawer;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.roadway.capslabs.roadway_chat.R;
@@ -35,6 +38,7 @@ public class DrawerFactory {
         final DrawerBuilder drawer = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
+                .withActionBarDrawerToggle(true)
                 .withAccountHeader(getAccountHeader(activity))
                 .addDrawerItems(
                         getDrawerItems()
@@ -44,7 +48,7 @@ public class DrawerFactory {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
 
-                        if (position == 1) {
+                        if (position == 5) {
                             getAlert(activity).show();
 //                            try {
 //                                new Logouter().execute(activity).get();
@@ -67,14 +71,21 @@ public class DrawerFactory {
             JSONObject profile = getProfile();
             String name = (String) profile.get("name");
             String email = (String) profile.get("email");
+//            SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+//            String email_s = null;
+//            email_s = sharedPref.getString("email", "Guest");
+
+            final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(activity);
+            String email_s = (mSharedPreference.getString("email", "Default_Value"));
+
+            //Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.drawer3);
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(activity)
-                    // .addProfiles(new ProfileDrawerItem())
-                    .withTextColorRes(R.color.colorProfileName)
-                    //.withHeaderBackground(R.color.colorDarkBackground)
-                    .withTextColorRes(R.color.colorProfileName)
+                    .addProfiles(new ProfileDrawerItem().withEmail(email_s))
+                    .withTextColorRes(R.color.black)
+                    .withProfileImagesVisible(false)
+                    //.withHeaderBackground(R.drawable.drawer3)
 
-                    .withHeaderBackground(R.drawable.drawer3)
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
 
@@ -86,13 +97,46 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-      //  SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(1).withName("Logout");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout").withIcon(R.drawable.logout)
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout").withIcon(R.drawable.logout)
                 .withTextColorRes(R.color.red);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
         return items.toArray(array);
+    }
+
+
+    private Class<? extends Activity> getActivity(int i) {
+        switch (i) {
+            case 1:
+                return QrScannerActivity.class;
+            default:
+                return QrScannerActivity.class;
+        }
+    }
+
+    private JSONObject getProfile() {
+        try {
+            return new JSONObject("{name:name, email:email}");
+        } catch (JSONException e) {
+            throw new RuntimeException("Exception while parsing json", e);
+        }
+    }
+
+    private final class Logouter extends AsyncTask<Activity, Void, Activity> {
+        @Override
+        protected Activity doInBackground(Activity... params) {
+            Activity context = params[0];
+            new LoginHelper().logout(context);
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(Activity context) {
+            super.onPostExecute(context);
+            Intent intent = new Intent(context, ActivityAuth.class);
+            context.startActivity(intent);
+        }
     }
 
     private AlertDialog.Builder getAlert(final Activity context) {
@@ -129,39 +173,5 @@ public class DrawerFactory {
         });
 
         return ad;
-    }
-
-    private Class<? extends Activity> getActivity(int i) {
-        switch (i) {
-            case 1:
-                return QrScannerActivity.class;
-
-            default:
-                return QrScannerActivity.class;
-        }
-    }
-
-    private JSONObject getProfile() {
-        try {
-            return new JSONObject("{name:name, email:email}");
-        } catch (JSONException e) {
-            throw new RuntimeException("Exception while parsing json", e);
-        }
-    }
-
-    private final class Logouter extends AsyncTask<Activity, Void, Activity> {
-        @Override
-        protected Activity doInBackground(Activity... params) {
-            Activity context = params[0];
-            new LoginHelper().logout(context);
-            return params[0];
-        }
-
-        @Override
-        protected void onPostExecute(Activity context) {
-            super.onPostExecute(context);
-            Intent intent = new Intent(context, ActivityAuth.class);
-            context.startActivity(intent);
-        }
     }
 }

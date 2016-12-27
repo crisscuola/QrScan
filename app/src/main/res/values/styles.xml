@@ -3,9 +3,15 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#54b2a9</item>
+        <item name="colorPrimaryDark">#009688</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="drawerArrowStyle">@style/DrawerIcon</item>
+        <item name="colorControlNormal">#000</item>
+    </style>
+
+    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">#000</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -25,6 +31,14 @@
         <item name="android:textColorHighlight">#35a79c</item>
     </style>
 
+    <style name="BlackEditTextTheme" parent="@android:style/Widget.EditText">
+        <item name="colorControlNormal">#000</item>
+        <item name="colorControlActivated">#000</item>
+        <item name="colorControlHighlight">@color/vk_share_gray_line</item>
+        <item name="android:textColorHint">#000</item>
+        <item name="android:textColorHighlight">@color/vk_share_gray_line</item>
+    </style>
+
     <style name="CustomTheme" parent="MaterialDrawerTheme">
         <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/material_drawer_primary</item>
@@ -41,6 +55,13 @@
         <item name="material_drawer_selected">@color/material_drawer_selected</item>
         <item name="material_drawer_selected_text">@color/material_drawer_selected_text</item>
         <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
+    </style>
+
+    <style name="CustomBar" parent="MaterialDrawerTheme.ActionBar">
+        <item name="colorPrimary">#fff</item>
+        <item name="colorPrimaryDark">@color/material_drawer_primary_dark</item>
+        <item name="colorAccent">@color/material_drawer_accent</item>
+        <item name="android:textColor">#000</item>
     </style>
 
     <!-- Material DEFAULT colors -->
@@ -76,6 +97,5 @@
     <color name="material_drawer_dark_selected">#202020</color>
     <color name="material_drawer_dark_selected_text">@color/material_drawer_primary</color>
     <color name="material_drawer_dark_header_selection_text">#FFF</color>
-
 
 </resources>
