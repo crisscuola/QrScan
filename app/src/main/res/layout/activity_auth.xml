@@ -15,7 +15,7 @@
         android:layout_weight="0.5"
         android:orientation="vertical">
 
-        <ImageView android:src="@drawable/logo2"
+        <ImageView android:src="@drawable/logo_m"
             android:layout_width="wrap_content"
             android:id="@+id/logo"
             android:layout_height="82dp"
@@ -68,15 +68,7 @@
             android:layout_height="wrap_content"
             android:text="VK"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/enter_as_guest"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorTextColor"
-            android:gravity="center_horizontal"
-            android:textSize="16sp" />
+
     </LinearLayout>
 
 </LinearLayout>

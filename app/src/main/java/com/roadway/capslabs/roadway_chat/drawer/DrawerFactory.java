@@ -48,7 +48,7 @@ public class DrawerFactory {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
 
-                        if (position == 5) {
+                        if (position == 1) {
                             getAlert(activity).show();
 //                            try {
 //                                new Logouter().execute(activity).get();
