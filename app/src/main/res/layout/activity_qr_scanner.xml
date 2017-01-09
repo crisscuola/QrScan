@@ -18,8 +18,8 @@
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="Press Button to Scan        QR code"
+            android:gravity="center_horizontal"
+            android:text=""
             android:id="@+id/clear_description"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:lines="4"
