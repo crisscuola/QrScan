@@ -101,13 +101,14 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 //
 //        System.runFinalizersOnExit(true);
 //        System.exit(0);
+        finish();
     }
 
     public void alertShow (String mes) {
         AlertDialog.Builder builder = new AlertDialog.Builder(QrScannerActivity.this);
         builder.setTitle("Важное сообщение!")
                 .setMessage(mes)
-                .setIcon(R.drawable.logo2)
+                .setIcon(R.drawable.logo_m)
                 .setCancelable(false)
                 .setNegativeButton("ОК",
                         new DialogInterface.OnClickListener() {
@@ -134,6 +135,11 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         @Override
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
+
+            if (response.contains("[36]")) {
+                alertShow("Код не валиден");
+            }
+
 
             if (response.contains("[37]")) {
                 alertShow("Код уже зарегестрирован");

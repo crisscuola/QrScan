@@ -1,5 +1,6 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,7 +35,7 @@ import okhttp3.HttpUrl;
 /**
  * Created by kirill on 23.11.16
  */
-public class Splash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int DELAY = 2000;
     private static final String TAG = "SplashActivity";
@@ -42,10 +44,33 @@ public class Splash extends AppCompatActivity {
     private ProgressBar mRegistrationProgressBar;
     private TextView mInformationTextView;
     private boolean isReceiverRegistered;
+    private Activity context = this;
+    private Button again;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!isOnline()) {
+            //showNoInternetMessage();
+
+            setContentView(R.layout.no_internet);
+
+            //mRegistrationProgressBar.setVisibility(View.INVISIBLE);
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, SplashActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            return;
+        }
+
         setContentView(R.layout.splash);
 
         mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
@@ -68,8 +93,7 @@ public class Splash extends AppCompatActivity {
                     startFeedActivity();
                     finish();
                 } else {
-                    Intent authActivity = new Intent(Splash.this, ActivityAuth.class);
-                    finish();
+                    Intent authActivity = new Intent(SplashActivity.this, ActivityAuth.class);
                     startActivity(authActivity);
                 }
             }
@@ -78,7 +102,6 @@ public class Splash extends AppCompatActivity {
 
     private void startFeedActivity() {
         Intent feedActivity = new Intent(this, QrScannerActivity.class);
-        finish();
         startActivity(feedActivity);
     }
 

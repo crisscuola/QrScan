@@ -97,7 +97,7 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout").withIcon(R.drawable.logout)
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Выйти").withIcon(R.drawable.ic_logout_grey600_48dp)
                 .withTextColorRes(R.color.red);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
@@ -140,10 +140,10 @@ public class DrawerFactory {
     }
 
     private AlertDialog.Builder getAlert(final Activity context) {
-        String title = "Warning!";
-        String message = "Are you sure you want to logout?";
-        String button1String = "Logout";
-        String button2String = "Cancel";
+        String title = context.getString(R.string.warning_alert_title);
+        String message = context.getString(R.string.logout_alert_message);
+        String button1String = context.getString(R.string.logout_alert_btn);
+        String button2String = context.getString(R.string.cancel_alert_btn);
 
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setTitle(title);
