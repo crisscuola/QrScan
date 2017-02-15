@@ -40,7 +40,7 @@
     <string name="title_activity_maps">Карта</string>
     <string name="title_activity_own">My Events</string>
     <string name="title_activity_sub">Избранное</string>
-    <string name="app_title">АкциоН</string>
+    <string name="app_title">Акцион</string>
     <string name="field_email">Почта:</string>
     <string name="field_password1">Пароль:</string>
     <string name="field_password2">Повторите пароль:</string>
@@ -121,7 +121,7 @@
     <string name="login_wrong_pass_format">Пароль должен содержать цифры и буквы, минимум 8 символов</string>
     <string name="reg_second_pass_message">Пароли должны совпадать</string>
     <string name="reg_empty_second_pass_message">Подтвердите пароль</string>
-    <string name="no_internet_connection">Отсутствует интернет соединение</string>
+    <string name="no_internet_connection">Отсутствует интернет соединение или оно нестабильно</string>
     <string name="try_again">Попробуйте снова</string>
     <string name="kilometers">км</string>
     <string name="login_failed">Ошибка входа</string>

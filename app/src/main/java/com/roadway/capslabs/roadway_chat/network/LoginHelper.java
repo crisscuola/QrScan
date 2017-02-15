@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.net.SocketTimeoutException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -79,6 +81,9 @@ public class LoginHelper {
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
                 .build();
         try {
             Response response = client.newCall(request).execute();
@@ -86,6 +91,9 @@ public class LoginHelper {
             saveCookie(cookieJar);
 
             return result;
+        } catch (SocketTimeoutException e) {
+            return "Timeout";
+            //throw new RuntimeException("Could not load event due to timeout exception" + request.url(), e);
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }

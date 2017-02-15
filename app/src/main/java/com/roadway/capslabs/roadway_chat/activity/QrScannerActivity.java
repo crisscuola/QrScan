@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.zxing.Result;
 import com.roadway.capslabs.roadway_chat.R;
@@ -30,6 +31,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     private Activity context = this;
     private AlertDialog.Builder ad;
     private String email;
+    private Button again;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +137,22 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         @Override
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
+
+            if (response.equals("Timeout")) {
+                Log.d("Time","Timeout NextEventSFeeDLoader");
+                setContentView(R.layout.no_internet);
+
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, QrScannerActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
 
             if (response.contains("[36]")) {
                 alertShow("Код не валиден");

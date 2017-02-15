@@ -41,7 +41,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
     @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC,
             messageResId = R.string.login_wrong_pass_format)
     private EditText password;
-    private Button button;
+    private Button button, again;
     TextView errorsTextView;
     private final Activity context = this;
 
@@ -126,21 +126,39 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             Log.d("response_login", result);
 
             JSONObject object;
-            try {
-                object = new JSONObject(result);
-            } catch (JSONException e) {
-                throw new RuntimeException("Exception during json parsing", e);
-            }
-            if (object.has("errors")) {
-                Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT)
-                        .show();
-                return;
-            }
 
-            Intent feedActivity = new Intent(context, QrScannerActivity.class);
-            feedActivity.putExtra("email", email.getText().toString());
-            feedActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(feedActivity);
+            if (result.equals("Timeout")) {
+                Log.d("Time", "Timeout UnFavoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ActivitySignIn.class);
+
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
+            else {
+                try {
+                    object = new JSONObject(result);
+                } catch (JSONException e) {
+                    throw new RuntimeException("Exception during json parsing", e);
+                }
+                if (object.has("errors")) {
+                    Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT)
+                            .show();
+                    return;
+                }
+
+                Intent feedActivity = new Intent(context, QrScannerActivity.class);
+                feedActivity.putExtra("email", email.getText().toString());
+                feedActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(feedActivity);
+            }
         }
     }
 }

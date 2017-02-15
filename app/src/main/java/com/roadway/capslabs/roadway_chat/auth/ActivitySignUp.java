@@ -43,7 +43,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
     @ConfirmPassword
     private EditText password2;
 
-    private Button register;
+    private Button register, again;
 
     private final Activity context = this;
 
@@ -115,19 +115,38 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         protected void onPostExecute(String result) {
             Log.d("response_registration", result);
             JSONObject object;
-            try {
-                object = new JSONObject(result);
-            } catch (JSONException e) {
-                throw new RuntimeException("JSON parsing error", e);
+
+            if (result.equals("Timeout")) {
+                Log.d("Time", "Timeout UnFavoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ActivitySignUp.class);
+
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            } else {
+
+                try {
+                    object = new JSONObject(result);
+                } catch (JSONException e) {
+                    throw new RuntimeException("JSON parsing error", e);
+                }
+                if (object.has("errors")) {
+                    Toast.makeText(getApplicationContext(),
+                            "Registration failed", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
+                intent.putExtra("email", email.getText().toString());
+                startActivity(intent);
             }
-            if (object.has("errors")) {
-                Toast.makeText(getApplicationContext(),
-                        "Registration failed", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
-            intent.putExtra("email", email.getText().toString());
-            startActivity(intent);
         }
+
     }
 }

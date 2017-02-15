@@ -9,6 +9,8 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -43,6 +45,9 @@ public class EventRequestHandler {
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
                 .build();
         try {
             Response response = client.newCall(request).execute();
@@ -51,8 +56,12 @@ public class EventRequestHandler {
 
             Log.d("response_create_handler", resp);
             return resp;
+        } catch (SocketTimeoutException e) {
+            return "Timeout";
+            //throw new RuntimeException("Could not load event due to timeout exception" + request.url(), e);
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }
+
     }
 }
